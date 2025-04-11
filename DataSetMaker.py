@@ -6,7 +6,7 @@ import time
 gesture_name = input("Enter the gesture name: ").upper()
 capture_interval = 0.5  # seconds
 images_per_hand = 100
-target_size = (192, 192)  # Resize target
+target_size = (224, 224)  # Resize target
 
 # Paths
 base_path = os.path.join("dataset", gesture_name)  # Each gesture will have its own folder
