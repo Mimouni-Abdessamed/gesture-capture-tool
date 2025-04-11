@@ -6,6 +6,7 @@ import time
 gesture_name = input("Enter the gesture name: ").upper()
 capture_interval = 0.5  # seconds
 images_per_hand = 100
+target_size = (192, 192)  # Resize target
 
 # Paths
 base_path = os.path.join("dataset", gesture_name)  # Each gesture will have its own folder
@@ -47,11 +48,12 @@ while True:
     cv2.putText(display_frame, instruction, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
     cv2.putText(display_frame, control_instructions, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
 
-    # Save original frame (without any text)
+    # Save resized frame (192x192)
     if capturing and not paused:
         if time.time() - last_capture_time >= capture_interval:
             save_path = os.path.join(combined_path, f"{gesture_name}_{hand}_{image_count:03}.jpg")
-            cv2.imwrite(save_path, frame)
+            resized_frame = cv2.resize(frame, target_size)
+            cv2.imwrite(save_path, resized_frame)
             print(f"Saved: {save_path}")
             image_count += 1
             last_capture_time = time.time()
