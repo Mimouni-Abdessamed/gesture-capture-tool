@@ -18,11 +18,6 @@ This is a lightweight and customizable Python script for collecting hand gesture
 | q   | Quit the program                  |
 
 ## ⚙️ How to Use
-
-1. Install OpenCV:
- ```bash
- pip install opencv-python
-python DataSetMaker.py
 🧠 Use Case
 This tool is ideal for:
 
@@ -32,5 +27,8 @@ Building gesture-based AI applications
 
 Training machine learning or deep learning models
 
-📸 Screenshot
-(You can add a screenshot of the webcam interface here)
+1. Install OpenCV:
+ ```bash
+ pip install opencv-python
+
+
