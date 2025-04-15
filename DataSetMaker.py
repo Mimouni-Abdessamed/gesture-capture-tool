@@ -9,10 +9,8 @@ images_per_hand = 100
 target_size = (224, 224)  # Resize target
 
 # Paths
-base_path = os.path.join("dataset", gesture_name)  # Each gesture will have its own folder
+base_path = os.path.join("dataset", gesture_name)
 combined_path = os.path.join(base_path, "left_right")
-
-# Create directories if not exist
 os.makedirs(combined_path, exist_ok=True)
 
 # Initialize camera
@@ -30,9 +28,13 @@ while True:
     if not ret:
         break
 
-    frame = cv2.flip(frame, 1)
+    frame = cv2.flip(frame, 1)  # Flip horizontally
 
-    # Copy frame to display instructions on it (not affecting the saved image)
+    # Crop to right half (X-axis)
+    height, width, _ = frame.shape
+    frame = frame[:, width // 2:]  # Keep right half of the frame only
+
+    # Copy frame to display instructions on it (not affecting saved image)
     display_frame = frame.copy()
 
     # Display instructions
@@ -43,12 +45,11 @@ while True:
     else:
         instruction = f"Capturing {hand} hand: {image_count}/{images_per_hand} ({gesture_name})"
 
-    # Additional controls text
     control_instructions = "Press 'a' to pause/resume | Press 'q' to quit"
     cv2.putText(display_frame, instruction, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
     cv2.putText(display_frame, control_instructions, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
 
-    # Save resized frame (192x192)
+    # Save resized frame
     if capturing and not paused:
         if time.time() - last_capture_time >= capture_interval:
             save_path = os.path.join(combined_path, f"{gesture_name}_{hand}_{image_count:03}.jpg")
